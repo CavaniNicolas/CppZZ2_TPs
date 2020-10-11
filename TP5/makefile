@@ -1,8 +1,8 @@
 SRC = $(wildcard src/*.cpp)
-SRCTests = $(wildcard src/tests/*.cpp)
+SRCTests = $(filter-out src/main.cpp, $(SRC)) $(wildcard src/tests/*.cpp)
 
 OBJ = $(addprefix build/, $(SRC:.cpp=.o))
-OBJTests = $(addprefix build, $(SRCTests:.cpp=.o))
+OBJTests = $(addprefix build/, $(SRCTests:.cpp=.o))
 DEP = $(addprefix build/, $(SRC:.cpp=.d))
 
 # options de compilation et d'edition des liens
@@ -11,7 +11,7 @@ LDFLAGS = #-lSDL
 
 .PHONY: all
 all: main tests
-	@echo "Compilation"
+	@echo "2 executables disponibles"
 
 .PHONY: main
 main: bin/main
@@ -27,7 +27,7 @@ bin/main: $(OBJ)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
 # edition des liens, executable tests
-bin/tests.exe: $(OBJ) $(OBJTests)
+bin/tests: $(OBJTests)
 	@mkdir -p $(@D) #creer le dossier bin, sil nexiste pas
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
@@ -40,23 +40,6 @@ build/%.o: %.cpp
 .PHONY: clean
 clean:
 	rm -rf build core *.gch
+	rm -rf bin
 
 -include $(DEP)
-
-# .PHONY: all
-# all: bin/executable
-# 	@echo "Executer avec ./bin/executable"
-
-# .PHONY: tests
-# tests: bin/tests.exe
-# 	@echo "Executer avec ./bin/tests.exe"
-
-# # edition des liens, executable main
-# bin/executable: $(OBJ)
-# 	@mkdir -p $(@D) #creer le dossier bin, sil nexiste pas
-# 	$(CXX) -o $@ $^ $(LDFLAGS)
-
-# # edition des liens, executable tests
-# bin/tests.exe: $(OBJ) $(OBJTests)
-# 	@mkdir -p $(@D) #creer le dossier bin, sil nexiste pas
-# 	$(CXX) -o $@ $^ $(LDFLAGS)
