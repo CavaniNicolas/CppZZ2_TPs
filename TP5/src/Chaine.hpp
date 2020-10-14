@@ -20,7 +20,15 @@ class Chaine {
 		int getCapacite() const;
 		char * c_str() const;
 		Chaine & operator=(Chaine const &);
+		char & operator[](int);
+		char & operator[](int) const;
 };
+
+std::ostream & operator<<(std::ostream &, Chaine const);
+Chaine operator+(Chaine const &, Chaine const &);
+bool operator==(Chaine const &, Chaine const &);
+// bool operator==(Chaine const &, char const *);
+// bool operator==(char const *, Chaine const &);
 
 #endif
 

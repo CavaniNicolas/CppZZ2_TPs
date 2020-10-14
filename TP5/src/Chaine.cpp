@@ -15,12 +15,14 @@ Chaine::Chaine(int capa):
 			}
 		}
 		catch (std::bad_alloc &e) {
+			capacite = 0;
 			std::cerr << e.what();
+			throw e;
 		}
 	}
 }
 
-Chaine::Chaine(const char * chaine):
+Chaine::Chaine(char const * chaine):
 	Chaine::Chaine(strlen(chaine))
 {
 	strcpy(tab, chaine);
@@ -56,7 +58,7 @@ Chaine & Chaine::operator=(Chaine const & chaine) {
 			try {
 				tab = new char[chaine.capacite];
 			}
-			catch (std::bad_alloc &e) {
+			catch (std::bad_alloc& e) {
 				std::cerr << e.what();
 			}
 		}
@@ -73,3 +75,45 @@ int Chaine::getCapacite() const {
 char * Chaine::c_str() const {
 	return tab;
 }
+
+std::ostream & operator<<(std::ostream & ss, Chaine const chaine) {
+	ss << chaine.c_str();
+	return ss;
+}
+
+char & Chaine::operator[](int index) {
+	return this->c_str()[index];
+}
+
+char & Chaine::operator[](int index) const{
+	return this->c_str()[index];
+}
+
+Chaine operator+(Chaine const & c1, Chaine const & c2) {
+	char * tab = new char[c1.getCapacite() + c2.getCapacite() + 1];
+	strcpy(tab, c1.c_str());
+	strcat(tab, c2.c_str());
+	Chaine tmp(tab);
+	delete [] tab;
+	return tmp;
+}
+
+bool operator==(Chaine const & c1, Chaine const & c2) {
+	bool areSame = false;
+	if (!strcmp(c1.c_str(), c2.c_str())) {
+		areSame = true;
+	}
+	return areSame;
+}
+
+// bool operator==(Chaine const & c1, char const * c2) {
+// 	bool areSame = false;
+// 	if (!strcmp(c1.c_str(), c2)) {
+// 		areSame = true;
+// 	}
+// 	return areSame;
+// }
+
+// bool operator==(char const * c1, Chaine const & c2) {
+// 	return c2 == c1;
+// }

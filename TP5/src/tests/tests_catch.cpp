@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include <cstring>
-#include <sstream> // a mettre en commentaire 
+#include <sstream> 
 #include "../Chaine.hpp"
 
 TEST_CASE("Constructeur par defaut") {
@@ -78,11 +78,50 @@ TEST_CASE("operateur d'affectation") {
 }
 
 
-// TEST_CASE("Surcharge <<") {
-// 	const char * chaine = "une nouvelle surcharge";
-// 	Chaine s(chaine);
-//     std::stringstream ss;
-//     // ss << s;  // :-)
+TEST_CASE("Surcharge <<") {
+	char const * chaine = "une nouvelle surcharge";
+	Chaine s(chaine);
+    std::stringstream ss;
+    ss << s;
 
-//     CHECK( ss.str() == chaine ); //  test de std::string, again :-))
-// }
+    CHECK( ss.str() == chaine );
+
+	char const * chaine2 = "une nouvelle surcharge hello";
+    ss << " hello";
+    CHECK( ss.str() == chaine2 );
+}
+
+TEST_CASE("Surcharge []") {
+    Chaine s("Bisous");
+
+    // s[-1] = 'Z';
+    // CHECK( !strcmp(s.c_str(), "BiZous") );
+    // SIGABRT - Abort (abnormal termination) signal :)
+
+    s[2] = 'Z';
+    CHECK( !strcmp(s.c_str(), "BiZous") );
+
+    Chaine const s2("Bisous");
+    char c = s2[1]; // Verifie si operator[] const est bien appele
+
+}
+
+TEST_CASE("Operator ==") {
+    Chaine c1("bonjour");
+    Chaine c2("bisous");
+    Chaine c3("bisous");
+
+    CHECK( !(c1 == c2) );
+    CHECK( c2 == c3 );
+    CHECK( Chaine("bonjour") == c1 );
+    // CHECK( c2 == "bisous" );
+    
+}
+
+TEST_CASE("Operator +") {
+    Chaine c1("bonjour");
+    Chaine c2("bisous");
+
+    CHECK( !strcmp((c1 + c2).c_str(), "bonjourbisous") );
+}
+
