@@ -3,12 +3,12 @@
 #include "Chaine.hpp"
 
 Chaine::Chaine(int capa):
-	capacite(capa+1),
+	capacite(capa),
 	tab(nullptr)
 {
 	if (capacite > 0) {
 		try {
-			tab = new char[capacite];
+			tab = new char[capacite + 1];
 			// Initialisation
 			for (int i=0; i<capa; i++) {
 				tab[i] = '\0';
@@ -29,7 +29,7 @@ Chaine::Chaine(char const * chaine):
 }
 
 Chaine::Chaine(const Chaine & chaine) :
-	Chaine::Chaine(chaine.getCapacite())
+	Chaine::Chaine(chaine.capacite)
 {
 	strcpy(tab, chaine.tab);
 	std::cerr << "Constructeur par copie" << std::endl;
@@ -69,7 +69,7 @@ Chaine & Chaine::operator=(Chaine const & chaine) {
 }
 
 int Chaine::getCapacite() const {
-	return capacite-1;
+	return capacite;
 }
 
 char * Chaine::c_str() const {
@@ -81,11 +81,22 @@ std::ostream & operator<<(std::ostream & ss, Chaine const chaine) {
 	return ss;
 }
 
-char & Chaine::operator[](int index) {
+char & Chaine::operator[](int index) throw (std::out_of_range) {
+	if (index < 0 || capacite < index) {
+		// throw OutOfRangeException;
+		throw std::out_of_range();
+	}
 	return this->c_str()[index];
 }
 
-char & Chaine::operator[](int index) const{
+char & Chaine::operator[](int index) const throw (std::out_of_range) {
+	if (index < 0 || capacite < index) {
+		// throw OutOfRangeException;
+		try {
+			throw std::out_of_range();
+		} catch (...) {
+		}
+	}
 	return this->c_str()[index];
 }
 
@@ -105,15 +116,3 @@ bool operator==(Chaine const & c1, Chaine const & c2) {
 	}
 	return areSame;
 }
-
-// bool operator==(Chaine const & c1, char const * c2) {
-// 	bool areSame = false;
-// 	if (!strcmp(c1.c_str(), c2)) {
-// 		areSame = true;
-// 	}
-// 	return areSame;
-// }
-
-// bool operator==(char const * c1, Chaine const & c2) {
-// 	return c2 == c1;
-// }

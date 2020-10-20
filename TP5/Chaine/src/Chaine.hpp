@@ -1,13 +1,16 @@
 #ifndef CPP5__CHAINE_HPP
 #define CPP5__CHAINE_HPP
 
+#include <exception>
+#include <stdexcept>
+
 #include <iostream>
 #include <fstream>
 
 class Chaine {
 
 	private:
-		int capacite;
+		int capacite; // Vraie capacite
 		char * tab;
 	
 	public:
@@ -20,15 +23,25 @@ class Chaine {
 		int getCapacite() const;
 		char * c_str() const;
 		Chaine & operator=(Chaine const &);
-		char & operator[](int);
-		char & operator[](int) const;
+		char & operator[](int) throw (std::out_of_range);
+		char & operator[](int) const throw (std::out_of_range);
+	
+	// public:
+	// 	class OutOfRangeException : public std::exception //Erreur avec what() sinon :-(
+	// 	{
+	// 		OutOfRangeException();
+	// 		OutOfRangeException(OutOfRangeException const &);
+	// 		OutOfRangeException & operator=(OutOfRangeException const &);
+	// 		virtual ~OutOfRangeException();
+	// 		virtual const char * what() const {
+	// 			std::cout << "Out of range Exception" << std::endl;
+	// 		}
+	// 	};
 };
 
 std::ostream & operator<<(std::ostream &, Chaine const);
 Chaine operator+(Chaine const &, Chaine const &);
 bool operator==(Chaine const &, Chaine const &);
-// bool operator==(Chaine const &, char const *);
-// bool operator==(char const *, Chaine const &);
 
 #endif
 

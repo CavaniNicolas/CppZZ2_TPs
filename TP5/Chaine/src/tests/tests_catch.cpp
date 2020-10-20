@@ -125,3 +125,24 @@ TEST_CASE("Operator +") {
     CHECK( !strcmp((c1 + c2).c_str(), "bonjourbisous") );
 }
 
+
+// TP6 Exceptions
+
+TEST_CASE("exceptions aux bornes") {
+  Chaine s(10);
+    
+  REQUIRE_THROWS_AS( s[-1] == 0, Chaine::OutOfRangeException);
+  // OU
+  REQUIRE_THROWS_AS( s[-1] == 0, std::out_of_range);
+  REQUIRE_THROWS_AS( s[12] == 0, std::bad_alloc);  // :-)
+}
+
+TEST_CASE("exception sur pointeur null") {
+  Chaine s(0);
+    
+  // verification que l'heritage est bien fait  
+  std::logic_error * pe = new null_pointer;  
+  delete pe;
+
+  REQUIRE_THROWS_AS( s[1] == 0, null_pointer);
+}
