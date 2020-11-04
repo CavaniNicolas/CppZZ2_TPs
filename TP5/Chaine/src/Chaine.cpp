@@ -6,7 +6,7 @@ Chaine::Chaine(int capa):
 	capacite(capa),
 	tab(nullptr)
 {
-	if (capacite > 0) {
+	if (capacite >= 0) {
 		try {
 			tab = new char[capacite + 1];
 			// Initialisation
@@ -81,21 +81,18 @@ std::ostream & operator<<(std::ostream & ss, Chaine const chaine) {
 	return ss;
 }
 
-char & Chaine::operator[](int index) throw (std::out_of_range) {
+char & Chaine::operator[](int index) { // throw (std::out_of_range) {
 	if (index < 0 || capacite < index) {
-		// throw OutOfRangeException;
-		throw std::out_of_range();
+		throw Chaine::OutOfRangeException();
+		// throw std::out_of_range("out of range operator[]");
 	}
 	return this->c_str()[index];
 }
 
-char & Chaine::operator[](int index) const throw (std::out_of_range) {
+char & Chaine::operator[](int index) const { // throw (std::out_of_range) {
 	if (index < 0 || capacite < index) {
-		// throw OutOfRangeException;
-		try {
-			throw std::out_of_range();
-		} catch (...) {
-		}
+		throw Chaine::OutOfRangeException();
+		// throw std::out_of_range("out of range operator[]");
 	}
 	return this->c_str()[index];
 }

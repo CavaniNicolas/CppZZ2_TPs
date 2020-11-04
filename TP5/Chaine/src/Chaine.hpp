@@ -23,20 +23,20 @@ class Chaine {
 		int getCapacite() const;
 		char * c_str() const;
 		Chaine & operator=(Chaine const &);
-		char & operator[](int) throw (std::out_of_range);
-		char & operator[](int) const throw (std::out_of_range);
+		char & operator[](int); // throw (std::out_of_range);
+		char & operator[](int) const; // throw (std::out_of_range);
 	
-	// public:
-	// 	class OutOfRangeException : public std::exception //Erreur avec what() sinon :-(
-	// 	{
-	// 		OutOfRangeException();
-	// 		OutOfRangeException(OutOfRangeException const &);
-	// 		OutOfRangeException & operator=(OutOfRangeException const &);
-	// 		virtual ~OutOfRangeException();
-	// 		virtual const char * what() const {
-	// 			std::cout << "Out of range Exception" << std::endl;
-	// 		}
-	// 	};
+	public:
+		class OutOfRangeException : public std::exception
+		{
+			// OutOfRangeException();
+			// OutOfRangeException(OutOfRangeException const &);
+			// OutOfRangeException & operator=(OutOfRangeException const &);
+			// virtual ~OutOfRangeException();
+			virtual const char * what() const noexcept {
+				return "Out of range Exception";
+			}
+		};
 };
 
 std::ostream & operator<<(std::ostream &, Chaine const);
