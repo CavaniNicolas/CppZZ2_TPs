@@ -66,6 +66,27 @@ class A {
 		}
 };
 
+// class A {
+// 	public:
+// 		M m;
+// 		A() {
+// 			std::cout << "A::A()" << std::endl;
+// 		}
+// 		~A() {
+// 			std::cout << "A::~A()" << std::endl;
+// 		}
+// 		A(const A&a)
+// 			:m(a.m)
+// 		{
+// 			std::cout << "A::A(const A&)" << std::endl;
+// 		}
+// 		A& operator=(const A& a) {
+// 			std::cout << "operator=(const A&)" << std::endl;
+// 			m = a.m;
+// 			return *this;
+// 		}
+// };
+
 
 void fonction() {
 
