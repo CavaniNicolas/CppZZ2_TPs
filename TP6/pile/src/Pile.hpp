@@ -10,7 +10,7 @@ private:
 	int * pile;
 
 public:
-	Pile(int=0);
+	Pile(int=10);
 	~Pile();
 
 	bool empty();

@@ -7,15 +7,17 @@ Pile::Pile(int pcapa):
 	psize(0),
 	pile(nullptr)
 {
-	if (pcapa >= 0) {
-		try {
-			pile = new int[pcapa];
-		}
-		catch (std::bad_alloc &e) {
-			pcapa = 0;
-			std::cerr << e.what();
-			throw e;
-		}
+	if (pcapa <= 0) {
+		throw std::invalid_argument("capacity must be positive");
+	}
+
+	try {
+		pile = new int[pcapa];
+	}
+	catch (std::bad_alloc &e) {
+		pcapa = 0;
+		std::cerr << e.what();
+		throw e;
 	}
 }
 
@@ -51,19 +53,20 @@ int Pile::pop()
 		value = pile[psize];
 		psize--;
 	} else {
-		std::cout << "can't pop empty queue" << std::endl;
-		throw new std::exception;
+		throw std::invalid_argument("can't pop empty queue");
 	}
 	return value;
 }
 
 int Pile::top()
 {
+	int value;
 	if (!empty()) {
-		std::cout << "top of queue : " << pile[psize] << std::endl;
+		value = pile[psize - 1];
 	} else {
-		throw new std::exception;
+		throw std::invalid_argument("can't top empty queue");
 	}
+	return value;
 }
 
 int Pile::size()
