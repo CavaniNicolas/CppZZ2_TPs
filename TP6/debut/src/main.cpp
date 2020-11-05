@@ -67,7 +67,7 @@ class A {
 };
 
 
-int main(int, char**) {
+void fonction() {
 
 	// F f1;
 	// F f2 = f1;
@@ -77,6 +77,30 @@ int main(int, char**) {
 	A a1;
 
 	A a2 = a1;
+}
 
+class Bavarde {
+	std::string nom;
+	public :
+	Bavarde(std::string n):nom(n) {
+		std::cout << "constructeur " << nom << std::endl;
+	}
+	~Bavarde() {
+		std::cout << "destructeur " << nom << std::endl;
+	}
+};
+
+Bavarde g("global");
+
+int main(int, char **) {
+	fonction();
+
+	Bavarde t("local");
+	static Bavarde s("statlocal");
+
+	// std::exit(1);
+	// std::terminate();
+	// std::unexpected(); // ne s'appelle pas normalement
 	return 0;
 }
+
