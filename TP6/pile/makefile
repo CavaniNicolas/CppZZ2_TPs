@@ -1,5 +1,5 @@
 SRC = $(wildcard src/*.cpp)
-SRCTests = $(filter-out src/main.cpp, $(SRC)) $(wildcard src/tests/*.cpp)
+SRCTests = $(filter-out src/Main.cpp, $(SRC)) $(wildcard src/tests/*.cpp)
 
 OBJ = $(addprefix build/, $(SRC:.cpp=.o))
 OBJTests = $(addprefix build/, $(SRCTests:.cpp=.o))
@@ -10,8 +10,8 @@ CXXFLAGS = -Wall -Wextra -MMD -g -O2
 LDFLAGS = #-lSDL
 
 .PHONY: all
-all: main #tests
-	@echo "1 executables disponibles"
+all: main tests
+	@echo "2 executables disponibles"
 
 .PHONY: main
 main: bin/main
