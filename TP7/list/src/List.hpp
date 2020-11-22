@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Cell.hpp"
+#include "ItList.hpp"
 
 //
 class List
@@ -36,7 +37,11 @@ public:
 	int pop_back();//
 	int size() const;
 
+	ItList begin();
+	ItList end();
+
 	List & operator=(List const &);
+
 };
 
 std::ostream & operator<<(std::ostream &, List const);

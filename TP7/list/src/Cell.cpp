@@ -12,7 +12,7 @@ Cell::~Cell()
 {
 }
 
-int Cell::getData()
+int & Cell::getData()
 {
 	return data;
 }

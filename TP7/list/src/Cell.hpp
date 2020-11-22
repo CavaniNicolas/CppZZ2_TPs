@@ -13,7 +13,7 @@ private:
 public:
 	Cell(Cell * prevCell, Cell * nextCell, int data);//
 	~Cell();
-	int getData();//
+	int & getData();//
 	Cell * getPrev();
 	Cell * getNext();
 	void setPrev(Cell *);

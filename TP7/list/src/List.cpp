@@ -2,6 +2,7 @@
 #include <iostream>
 #include "List.hpp"
 #include "Cell.hpp"
+#include "ItList.hpp"
 
 List::List():
 	firstCell(nullptr),
@@ -180,6 +181,18 @@ int List::pop_back()
 int List::size() const
 {
 	return listSize;
+}
+
+ItList List::begin()
+{
+	ItList itList(firstCell);
+	return itList;
+}
+
+ItList List::end()
+{
+	ItList itList;
+	return itList;
 }
 
 std::ostream & operator<<(std::ostream & ss, List const list)
